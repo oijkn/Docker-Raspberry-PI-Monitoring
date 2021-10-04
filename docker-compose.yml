@@ -36,7 +36,7 @@ services:
     networks:
       - rpimonitor_default
     ports:
-      - 1013:3000
+      - 3000:3000
     restart: unless-stopped
     volumes:
       # to be modified depending on your needs
