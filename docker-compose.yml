@@ -73,7 +73,6 @@ services:
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
-      - blackbox:blackbox
 
 networks:
   rpimonitor_default:
