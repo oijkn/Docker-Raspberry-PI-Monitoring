@@ -10,7 +10,25 @@ A monitoring solution for Docker hosts and containers with [Prometheus](https://
 
 ## Installation
 
-Clone this repository on your Docker host, cd into Docker-Raspberry-PI-Monitoring directory and run docker-compose up:
+First SSH into your Pi and there is one thing we need to do before we get cracking. We need to enable `c-groups` so the stack will work out of the box. To do this you need to modify the configuration file `/boot/cmdline.txt`:
+
+```
+sudo nano /boot/cmdline.txt
+```
+
+And add the following options:
+
+```
+cgroup_enable=memory cgroup_memory=1
+```
+
+Now save the file in your editor and reboot:
+
+```
+sudo reboot
+```
+
+Then clone this repository on your Pi host, cd into Docker-Raspberry-PI-Monitoring directory and run docker-compose up:
 
 ```sh
 git clone https://github.com/oijkn/Docker-Raspberry-PI-Monitoring.git
@@ -36,6 +54,12 @@ GF_USERS_ALLOW_SIGN_UP=false
 ```
 
 Grafana is not preconfigured with dashboard, so you have to import it from the [json](https://github.com/oijkn/Docker-Raspberry-PI-Monitoring/blob/main/grafana/dashboard_by_oijkn.json) file. And set Prometheus as the default data source.
+  
+```
+Grafana > Configuration > Data Sources > Prometheus
+```
+![image](https://user-images.githubusercontent.com/18188407/137201046-691a09e8-3efd-478c-a943-7c61ce409931.png)
+
 
 ## Setup Prometheus
 
