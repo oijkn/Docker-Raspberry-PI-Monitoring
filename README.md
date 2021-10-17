@@ -6,7 +6,7 @@ A monitoring solution for Docker hosts and containers with [Prometheus](https://
 
 ## Screenshot
 
-![screencapture-192-168-1-100-1013-d-Ss3q6hSZk-docker-and-os-metrics-2021-10-13-21_35_57](https://user-images.githubusercontent.com/18188407/137201307-a47cf9c3-fe8b-4792-8bd1-3fc02f89893b.png)
+![image](https://user-images.githubusercontent.com/18188407/137626481-f9224dee-c3a9-4813-a104-b948dfa469e9.png)
 
 ## Installation
 
