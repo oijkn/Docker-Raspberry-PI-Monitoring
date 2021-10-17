@@ -8,7 +8,7 @@ You can **download** this dashboard at [Grafana Dashboard Community](https://gra
 
 ## Screenshot
 
-![image](https://user-images.githubusercontent.com/18188407/137626481-f9224dee-c3a9-4813-a104-b948dfa469e9.png)
+![image](https://user-images.githubusercontent.com/18188407/137627367-d872c46c-7052-4dfd-ba86-6b46571ebd15.png)
 
 ## Installation
 
