@@ -4,6 +4,8 @@
 
 A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), [NodeExporter](https://github.com/prometheus/node_exporter).
 
+You can **download** this dashboard at [Grafana Dashboard Community](https://grafana.com/grafana/dashboards/15120)
+
 ## Screenshot
 
 ![image](https://user-images.githubusercontent.com/18188407/137626481-f9224dee-c3a9-4813-a104-b948dfa469e9.png)
