@@ -3,11 +3,11 @@ services:
   cadvisor:
     container_name: monitoring-cadvisor
     devices:
-      - /dev/kmsg:/dev/kmsg
+      - /dev/kmsg
     expose:
       - 8080
     hostname: rpi-cadvisor
-    image: braingamer/cadvisor-arm:latest
+    image: zcube/cadvisor:latest
     ipc: shareable
     networks:
       - rpimonitor_default
@@ -17,7 +17,7 @@ services:
       - label=disable
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
