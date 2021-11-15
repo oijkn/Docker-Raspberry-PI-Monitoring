@@ -162,7 +162,7 @@
       "pluginVersion": "8.2.2",
       "targets": [
         {
-          "expr": "count(rate(container_last_seen{id=~\"/docker/.*\"}[5m]))",
+          "expr": "count(container_tasks_state{image!=""} and container_tasks_state{state=~"running"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
