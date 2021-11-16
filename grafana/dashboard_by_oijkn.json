@@ -162,7 +162,7 @@
       "pluginVersion": "8.2.2",
       "targets": [
         {
-          "expr": "count(container_tasks_state{image!=""} and container_tasks_state{state=~"running"})",
+          "expr": "count(rate(container_tasks_state{image!="", state=~"running"}[$__range]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
