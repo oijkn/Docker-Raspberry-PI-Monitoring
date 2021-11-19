@@ -24,7 +24,7 @@
   "gnetId": 10566,
   "graphTooltip": 1,
   "id": 2,
-  "iteration": 1635356112163,
+  "iteration": 1637314814309,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -84,7 +84,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "expr": "time() - node_boot_time_seconds",
@@ -159,10 +159,11 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
-          "expr": "count(rate(container_tasks_state{image!="", state=~"running"}[$__range]))",
+          "exemplar": true,
+          "expr": "count(rate(container_tasks_state{image!=\"\", state=~\"running\"}[$__range]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -239,11 +240,11 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
-          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[$__rate_interval])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
+          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[$__range])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -311,7 +312,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
@@ -403,7 +404,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
@@ -482,7 +483,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
@@ -566,7 +567,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "expr": "min((node_filesystem_size_bytes{fstype=~\"ext4\"} - node_filesystem_free_bytes{fstype=~\"ext4\"} )/ node_filesystem_size_bytes{fstype=~\"ext4\"})",
@@ -649,7 +650,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "exemplar": true,
@@ -756,9 +757,11 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_system_seconds_total[1m]))",
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_system_seconds_total[$__range]))",
           "format": "time_series",
           "hide": true,
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "a",
           "refId": "B",
@@ -1005,7 +1008,8 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
-          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[5m])",
+          "exemplar": true,
+          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[$__range])",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1015,7 +1019,8 @@
           "step": 240
         },
         {
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
+          "exemplar": true,
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1104,7 +1109,8 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
+          "exemplar": true,
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1113,9 +1119,11 @@
           "step": 240
         },
         {
-          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$interval])",
+          "exemplar": true,
+          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$__range])",
           "format": "time_series",
           "hide": true,
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "B",
@@ -1204,7 +1212,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1293,7 +1301,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1916,7 +1924,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_disk_reads_completed_total[$__rate_interval])",
+          "expr": "rate(node_disk_reads_completed_total[$__range])",
           "interval": "",
           "intervalFactor": 4,
           "legendFormat": "{{device}} - Reads completed",
@@ -1925,7 +1933,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_disk_writes_completed_total[$__rate_interval])",
+          "expr": "- rate(node_disk_writes_completed_total[$__range])",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{device}} - Writes completed",
@@ -2025,7 +2033,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[5m])*8",
+          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[$__range])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2036,7 +2044,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[5m])*8",
+          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[$__range])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2125,7 +2133,8 @@
       "pluginVersion": "8.1.5",
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[5m])) by (name) * 100",
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[$__range])) by (name) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2482,7 +2491,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 31,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "prometheus",
@@ -2520,7 +2529,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -2551,5 +2560,5 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "Ss3q6hSZk",
-  "version": 32
+  "version": 34
 }
