@@ -163,7 +163,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "count(rate(container_tasks_state{image!=\"\", state=~\"running\"}[$__range]))",
+          "expr": "count(count by (name) (rate(container_tasks_state{image!="", state=~"running"}[$__range])))",
           "format": "time_series",
           "hide": false,
           "interval": "",
