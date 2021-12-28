@@ -24,13 +24,15 @@
   "gnetId": 10566,
   "graphTooltip": 1,
   "id": 2,
-  "iteration": 1637314814309,
+  "iteration": 1640730101990,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Time during which Pi is in operation",
       "fieldConfig": {
         "defaults": {
@@ -66,7 +68,6 @@
         "y": 0
       },
       "id": 24,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -84,7 +85,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "expr": "time() - node_boot_time_seconds",
@@ -101,8 +102,6 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
       "description": "Total containers running",
       "fieldConfig": {
         "defaults": {
@@ -141,7 +140,6 @@
         "y": 0
       },
       "id": 31,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -159,11 +157,15 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "t4f0shgRk"
+          },
           "exemplar": true,
-          "expr": "count(rate(container_tasks_state{image!=\"\", state=~\"running\"}[$__range]))",
+          "expr": "count(rate(container_tasks_state{image!=\"\", state=~\"running\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -177,8 +179,10 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
         "defaults": {
@@ -240,11 +244,11 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "exemplar": true,
-          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[$__range])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
+          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[5m])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -257,8 +261,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Non available RAM memory",
       "fieldConfig": {
         "defaults": {
@@ -312,7 +318,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "exemplar": true,
@@ -341,8 +347,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Used Swap",
       "fieldConfig": {
         "defaults": {
@@ -404,7 +412,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "exemplar": true,
@@ -420,8 +428,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
         "defaults": {
@@ -483,7 +493,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "exemplar": true,
@@ -501,8 +511,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Total used disk space",
       "fieldConfig": {
         "defaults": {
@@ -551,7 +563,6 @@
         "y": 0
       },
       "id": 26,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -567,7 +578,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "expr": "min((node_filesystem_size_bytes{fstype=~\"ext4\"} - node_filesystem_free_bytes{fstype=~\"ext4\"} )/ node_filesystem_size_bytes{fstype=~\"ext4\"})",
@@ -584,8 +595,10 @@
       "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Hardware temperature",
       "fieldConfig": {
         "defaults": {
@@ -634,7 +647,6 @@
         "y": 0
       },
       "id": 44,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -650,7 +662,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.4.0-46435pre",
       "targets": [
         {
           "exemplar": true,
@@ -668,7 +680,10 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -758,7 +773,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_system_seconds_total[$__range]))",
+          "expr": "sum(rate(container_cpu_system_seconds_total[5m]))",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -819,14 +834,14 @@
           "refId": "E"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "CPU Usage",
       "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -900,7 +915,6 @@
         "y": 4
       },
       "id": 45,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -935,7 +949,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1009,7 +1026,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[$__range])",
+          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[5m])",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1020,7 +1037,7 @@
         },
         {
           "exemplar": true,
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1030,13 +1047,14 @@
           "step": 10
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Received Network Traffic per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1110,7 +1128,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1120,7 +1138,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$__range])",
+          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[5m])",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1130,13 +1148,14 @@
           "step": 10
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Sent Network Traffic per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1212,20 +1231,21 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "I/O Rx FS per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1301,20 +1321,21 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "I/O Tx FS per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Disk space used",
       "fieldConfig": {
         "defaults": {
@@ -1406,13 +1427,14 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Used Disk Space",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1520,13 +1542,14 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Used Memory",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "The number (after merges) of I/O requests completed per second for the device",
       "fieldConfig": {
         "defaults": {
@@ -1920,11 +1943,10 @@
         }
       },
       "pluginVersion": "8.2.2",
-      "repeat": null,
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_disk_reads_completed_total[$__range])",
+          "expr": "rate(node_disk_reads_completed_total[5m])",
           "interval": "",
           "intervalFactor": 4,
           "legendFormat": "{{device}} - Reads completed",
@@ -1933,7 +1955,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_disk_writes_completed_total[$__range])",
+          "expr": "- rate(node_disk_writes_completed_total[5m])",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{device}} - Writes completed",
@@ -1941,13 +1963,14 @@
           "step": 240
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Disk IO",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2033,7 +2056,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[$__range])*8",
+          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[5m])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2044,7 +2067,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[$__range])*8",
+          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[5m])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2054,13 +2077,14 @@
           "step": 600
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Network Traffic",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2134,7 +2158,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[$__range])) by (name) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[5m])) by (name) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2145,13 +2169,14 @@
           "step": 240
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "CPU Usage per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2243,13 +2268,14 @@
           "step": 240
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "RSS Memory Usage per Container",
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2342,14 +2368,15 @@
           "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Used Memory per Container",
       "type": "timeseries"
     },
     {
       "columns": [],
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 8,
@@ -2359,7 +2386,6 @@
       },
       "id": 42,
       "links": [],
-      "pageSize": null,
       "scroll": true,
       "showHeader": true,
       "sort": {
@@ -2370,7 +2396,6 @@
         {
           "alias": "",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -2387,7 +2412,6 @@
         {
           "alias": "Used memory",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -2404,7 +2428,6 @@
         {
           "alias": "Available memory",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -2421,7 +2444,6 @@
         {
           "alias": "Limit memory",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -2438,7 +2460,6 @@
         {
           "alias": "",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -2483,15 +2504,13 @@
           "refId": "C"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Memory usage per container",
       "transform": "table",
       "type": "table-old"
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 32,
+  "refresh": false,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [
     "prometheus",
@@ -2509,8 +2528,6 @@
           "text": "60s",
           "value": "60s"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "label": "Interval",
         "name": "interval",
@@ -2529,7 +2546,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -2560,5 +2577,6 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "Ss3q6hSZk",
-  "version": 34
+  "version": 35,
+  "weekStart": ""
 }
