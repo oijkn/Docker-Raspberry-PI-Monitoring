@@ -24,7 +24,7 @@
   "gnetId": 10566,
   "graphTooltip": 1,
   "id": 2,
-  "iteration": 1640730101990,
+  "iteration": 1640730899939,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -165,7 +165,7 @@
             "uid": "t4f0shgRk"
           },
           "exemplar": true,
-          "expr": "count(rate(container_tasks_state{image!=\"\", state=~\"running\"}[5m]))",
+          "expr": "count(count by (name) (rate(container_tasks_state{image!=\"\", state=~\"running\"}[$__range])))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -248,7 +248,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[5m])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
+          "expr": "(((count(count(node_cpu_seconds_total) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle'}[$__range])))) * 100) / count(count(node_cpu_seconds_total) by (cpu))",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -773,7 +773,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_system_seconds_total[5m]))",
+          "expr": "sum(rate(container_cpu_system_seconds_total[$__range]))",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1026,7 +1026,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[5m])",
+          "expr": "rate(container_network_receive_bytes_total{name!=\"\"}[$__range])",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1037,7 +1037,7 @@
         },
         {
           "exemplar": true,
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1128,7 +1128,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[5m])) by (name)",
+          "expr": "max(rate(container_network_transmit_bytes_total{name!=\"\"}[$__range])) by (name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1138,7 +1138,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[5m])",
+          "expr": "rate(container_network_transmit_bytes_total{id=\"/\"}[$__range])",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -1231,7 +1231,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_writes_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1321,7 +1321,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[5m]))",
+          "expr": "sum without (dc,from,id,csv) (irate(container_fs_reads_bytes_total{image!=\"\",device!~\"/dev/dm.*\"}[$__range]))",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -1946,7 +1946,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_disk_reads_completed_total[5m])",
+          "expr": "rate(node_disk_reads_completed_total[$__range])",
           "interval": "",
           "intervalFactor": 4,
           "legendFormat": "{{device}} - Reads completed",
@@ -1955,7 +1955,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_disk_writes_completed_total[5m])",
+          "expr": "- rate(node_disk_writes_completed_total[$__range])",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{device}} - Writes completed",
@@ -2056,7 +2056,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[5m])*8",
+          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[$__range])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2067,7 +2067,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[5m])*8",
+          "expr": "- rate(node_network_transmit_bytes_total{device=\"eth0\"}[$__range])*8",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2158,7 +2158,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[5m])) by (name) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[$__range])) by (name) * 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2509,7 +2509,7 @@
       "type": "table-old"
     }
   ],
-  "refresh": false,
+  "refresh": "30s",
   "schemaVersion": 34,
   "style": "dark",
   "tags": [
@@ -2546,7 +2546,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -2577,6 +2577,6 @@
   "timezone": "browser",
   "title": "Docker and OS Metrics for Raspberry Pi",
   "uid": "Ss3q6hSZk",
-  "version": 35,
+  "version": 36,
   "weekStart": ""
 }
