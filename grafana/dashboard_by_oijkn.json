@@ -2070,7 +2070,7 @@
               }
             ]
           },
-          "unit": "bps"
+          "unit": "Bps"
         },
         "overrides": [
           {
