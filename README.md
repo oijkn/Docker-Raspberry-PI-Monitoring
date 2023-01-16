@@ -2,73 +2,84 @@
 
 ## Introduction
 
-A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor), [NodeExporter](https://github.com/prometheus/node_exporter).
+This repository contains a `docker-compose` file to run a Raspberry PI monitoring stack. It is based on the following projects:
+- [Prometheus](https://prometheus.io/)
+- [Grafana](http://grafana.org/)
+- [cAdvisor](https://github.com/google/cadvisor)
+- [NodeExporter](https://github.com/prometheus/node_exporter)
 
-You can **download** this dashboard at [Grafana Dashboard Community](https://grafana.com/grafana/dashboards/15120)
+## Prerequisites
 
-## Screenshot
+Before we get started installing the stack, we need to make sure that the following prerequisites are met:
+- Docker is installed on the host machine
+- Docker Compose is installed on the host machine
+- The host machine is running a Raspberry PI OS or any other compatible Linux distribution
 
-![image](https://user-images.githubusercontent.com/18188407/137627367-d872c46c-7052-4dfd-ba86-6b46571ebd15.png)
+## Installation and Configuration
 
-## Installation
+If you would like to change which targets should be monitored, you can edit the ![prometheus.yml](prometheus/prometheus.yml) file.
+<br/>The targets section contains a list of all the targets that should be monitored by Prometheus.
+<br/>The names defined in the `job_name` section are used to identify the targets in Grafana.
+<br/>The `static_configs` section contains the IP addresses of the targets that should be monitored. Actually, they are sourced from the service names defined in the ![docker-compose.yml](docker-compose.yml) file.
+<br/>If you think that the `scrape_interval` value is too aggressive, you can change it to a more suitable value.
 
-First SSH into your Pi and there is one thing we need to do before we get cracking. We need to enable `c-groups` so the stack will work out of the box. To do this you need to modify the configuration file `/boot/cmdline.txt`:
-
-```
-sudo nano /boot/cmdline.txt
-```
-
-And add the following options:
-
-```
-cgroup_enable=memory cgroup_memory=1
-```
-
-Now save the file in your editor and reboot:
-
-```
-sudo reboot
-```
-
-Then clone this repository on your Pi host, cd into Docker-Raspberry-PI-Monitoring directory and run docker-compose up:
-
-```sh
-git clone https://github.com/oijkn/Docker-Raspberry-PI-Monitoring.git
-cd Docker-Raspberry-PI-Monitoring
+Once you have made the necessary changes, simply clone this repository and start the stack by running the following command:
+```bash
 docker-compose up -d
 ```
 
-Containers:
+This will start all the containers and make them available on the host machine.
+<br/>The following ports are used (only Grafana is exposed on the host machine):
+- 3000: Grafana
+- 9090: Prometheus
+- 8080: cAdvisor
+- 9100: NodeExporter
 
-* Prometheus (metrics database) http://<host-ip>:9090
-* Grafana (visualize metrics) http://<host-ip>:3000
-* NodeExporter (host metrics collector)
-* cAdvisor (containers metrics collector)
+The Grafana dashboard can be accessed by navigating to `http://<host-ip>:3000` in your browser for example `http://192.168.1.100:3000`.
+<br/>The default username and password are both `admin`. You will be prompted to change the password on the first login.
+<br/>Credentials can be changed by editing the ![.env](grafana/.env) file.
 
-## Setup Grafana
-
-Navigate to `http://<host-ip>:3000` and login with user ***admin*** password ***admin***. You can change the credentials in the compose file or by supplying the `ADMIN_USER` and `ADMIN_PASSWORD` environment variables on compose up. 
-
-```yaml
-GF_SECURITY_ADMIN_USER=admin
-GF_SECURITY_ADMIN_PASSWORD=changeme
-GF_USERS_ALLOW_SIGN_UP=false
+In order to check if the stack is running correctly, you can run the following command:
+```bash
+docker-compose ps
 ```
 
-Grafana is not preconfigured with dashboard, so you have to import it from the [json](https://github.com/oijkn/Docker-Raspberry-PI-Monitoring/blob/main/grafana/dashboard_by_oijkn.json) file. And set Prometheus as the default data source.
-  
+View the logs of a specific container by running the following command:
+```bash
+docker logs -f <container-name>
 ```
-Grafana > Configuration > Data Sources > Prometheus
-```
-![image](https://user-images.githubusercontent.com/18188407/137201046-691a09e8-3efd-478c-a943-7c61ce409931.png)
 
+## Add Data Sources and Dashboards
 
-## Setup Prometheus
+Since Grafana v5 has introduced the concept of provisioning, it is possible to automatically add data sources and dashboards to Grafana.
+<br/>This is done by placing the `datasources` and `dashboards` directories in the ![provisioning](grafana/provisioning) folder. The files in these directories are automatically loaded by Grafana on startup.
 
-```yaml
-scrape_configs:
-  - job_name: 'prometheus'
-    scrape_interval: 30s
-    static_configs:
-      - targets: ['localhost:9090', 'cadvisor:8080', 'node-exporter:9100']
+If you like to add a new dashboard, simply place the JSON file in the ![dashboards](grafana/provisioning/dashboards) directory, and it will be automatically loaded next time Grafana is started.
+
+# Install Dashboard from Grafana.com
+
+If you would like to install this dashboard from Grafana.com, simply follow the steps below:
+- Navigate to the dashboard on Grafana.com: https://grafana.com/dashboards/15120
+- Click on the `Copy ID to Clipboard` button
+- Navigate to the `Import` page in Grafana
+- Paste the ID into the `Import via grafana.com` field
+- Click on the `Load` button
+- Click on the `Import` button
+
+This dashboard is intended to help you get started with monitoring your Raspberry PI devices. If you have any changes or suggestions, you would like to see, please feel free to open an issue or create a pull request.
+
+Here is a screenshot of the dashboard:
+![Grafana Dashboard](grafana/screenshots/dashboard.png)
+
+## License
+
+This project is licensed under the MIT License - see the ![LICENSE](LICENSE) file for details
+
+## Troubleshooting
+
+Enable `c-group` memory and swap accounting on the host machine by running the following command:
+```bash
+sudo sed -i 's/^GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="cgroup_enable=memory cgroup_memory=1 swapaccount=1"/' /etc/default/grub
+sudo update-grub
+sudo reboot
 ```

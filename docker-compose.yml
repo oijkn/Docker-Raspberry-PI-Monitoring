@@ -1,80 +1,89 @@
 version: "3"
 services:
+  grafana:
+    container_name: monitoring-grafana
+    image: grafana/grafana:latest
+    hostname: rpi-grafana
+    restart: unless-stopped
+    user: "472"
+    networks:
+      - internal
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./grafana/.env
+    volumes:
+      # /!\ To be modified depending on your needs /!\
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+
   cadvisor:
     container_name: monitoring-cadvisor
-    devices:
-      - /dev/kmsg
+    image: zcube/cadvisor:latest
+    hostname: rpi-cadvisor
+    restart: unless-stopped
+    privileged: true
+    networks:
+      - internal
     expose:
       - 8080
-    hostname: rpi-cadvisor
-    image: zcube/cadvisor:latest
-    ipc: shareable
-    networks:
-      - rpimonitor_default
-    privileged: true
-    restart: unless-stopped
-    security_opt:
-      - label=disable
+    devices:
+      - /dev/kmsg
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:ro
+      - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
-      
-  grafana:
-    container_name: monitoring-grafana
-    environment:
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_PATHS_CONFIG=/etc/grafana/grafana.ini
-      - GF_PATHS_DATA=/var/lib/grafana
-      - GF_PATHS_HOME=/usr/share/grafana
-      - GF_PATHS_LOGS=/var/log/grafana
-      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
-      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
-    hostname: rpi-grafana
-    image: grafana/grafana:latest
-    networks:
-      - rpimonitor_default
-    ports:
-      - 3000:3000
-    restart: unless-stopped
-    volumes:
-      # to be modified depending on your needs
-      - /path/to/your/grafana/data:/var/lib/grafana
-      - /path/to/your/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - /path/to/your/grafana/provisioning:/etc/grafana/provisioning
+      - /etc/machine-id:/etc/machine-id:ro
 
   node-exporter:
     container_name: monitoring-node-exporter
+    image: prom/node-exporter:latest
+    hostname: rpi-exporter
+    restart: unless-stopped
+    networks:
+      - internal
     expose:
       - 9100
-    hostname: rpi-exporter
-    image: prom/node-exporter:latest
-    networks:
-      - rpimonitor_default
-    restart: unless-stopped
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/host
+      - --collector.filesystem.ignored-mount-points
+      - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /:/host:ro,rslave
 
   prometheus:
+    container_name: monitoring-prometheus
+    image: prom/prometheus:latest
+    hostname: rpi-prometheus
+    restart: unless-stopped
+    user: "nobody"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-    container_name: monitoring-prometheus
+    networks:
+      - internal
     expose:
       - 9090
-    hostname: rpi-prom
-    image: prom/prometheus:latest
-    networks:
-      - rpimonitor_default
-    restart: unless-stopped
     volumes:
-      # to be modified depending on your needs
-      - /path/to/your/prometheus/data:/prometheus
-      - /path/to/your/prometheus/config:/etc/prometheus/
+      # /!\ To be modified depending on your needs /!\
+      - ./prometheus/data:/prometheus
+      - ./prometheus:/etc/prometheus/
+    depends_on:
+      - cadvisor
+      - node-exporter
     links:
       - cadvisor:cadvisor
       - node-exporter:node-exporter
 
 networks:
-  rpimonitor_default:
-    external: true
+  internal:
+    driver: bridge
