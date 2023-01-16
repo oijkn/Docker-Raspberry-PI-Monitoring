@@ -23,6 +23,14 @@ If you would like to change which targets should be monitored, you can edit the 
 <br/>The `static_configs` section contains the IP addresses of the targets that should be monitored. Actually, they are sourced from the service names defined in the [docker-compose.yml](docker-compose.yml) file.
 <br/>If you think that the `scrape_interval` value is too aggressive, you can change it to a more suitable value.
 
+You must also create `data` directory and change the ownership of the `prometheus` and `grafana` folders for a nice and clean installation.
+<br/>To do so, run the following commands:
+```bash
+mkdir -p prometheus/data grafana/data && \
+sudo chown -R 472:472 grafana/ && \
+sudo chown -R 65534:65534 prometheus/
+```
+
 Once you have made the necessary changes, simply clone this repository and start the stack by running the following command:
 ```bash
 docker-compose up -d

@@ -21,7 +21,7 @@
       }
     ]
   },
-  "description": "Dashboard with details of the container and host OS metrics for Raspberry Pi by Oijkn.",
+  "description": "Dashboard with details of the containers and host metrics for Raspberry Pi by Oijkn.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 10566,
@@ -43,10 +43,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
         "defaults": {
@@ -131,7 +128,10 @@
       "type": "gauge"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Busy state of all CPU cores together (5 min average)",
       "fieldConfig": {
         "defaults": {
@@ -219,7 +219,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -315,10 +315,7 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "Used Swap",
       "fieldConfig": {
         "defaults": {
@@ -402,10 +399,7 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "Used Root FS",
       "fieldConfig": {
         "defaults": {
@@ -492,7 +486,10 @@
       "type": "gauge"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "Hardware temperature",
       "fieldConfig": {
         "defaults": {
@@ -582,7 +579,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "Total number of CPU cores",
       "fieldConfig": {
@@ -646,16 +643,13 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "count(count(node_cpu_seconds_total) by (cpu))",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "step": 240
+          "refId": "A"
         }
       ],
       "title": "CPU Cores",
@@ -664,7 +658,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -730,14 +724,13 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "node_time_seconds - node_boot_time_seconds",
-          "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "step": 240
+          "refId": "A"
         }
       ],
       "title": "Uptime",
@@ -746,7 +739,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "Total RootFS",
       "fieldConfig": {
@@ -815,16 +808,13 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "node_filesystem_size_bytes{mountpoint=\"/\",fstype!=\"rootfs\"}",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "step": 240
+          "refId": "A"
         }
       ],
       "title": "RootFS Total",
@@ -833,7 +823,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "Total RAM",
       "fieldConfig": {
@@ -898,14 +888,13 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "node_memory_MemTotal_bytes",
-          "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "step": 240
+          "refId": "A"
         }
       ],
       "title": "RAM Total",
@@ -914,7 +903,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "Total SWAP",
       "fieldConfig": {
@@ -979,14 +968,13 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "node_memory_SwapTotal_bytes",
-          "intervalFactor": 1,
+          "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "step": 240
+          "refId": "A"
         }
       ],
       "title": "SWAP Total",
@@ -1008,7 +996,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -1120,7 +1108,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "(sum by(instance) (irate(node_cpu_seconds_total{mode!=\"idle\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total[$__rate_interval])))) * 100",
@@ -1134,7 +1122,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1252,10 +1243,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "Disk space used",
       "fieldConfig": {
         "defaults": {
@@ -1352,7 +1340,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "description": "The number (after merges) of I/O requests completed per second for the device",
       "fieldConfig": {
@@ -1803,7 +1791,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1927,7 +1918,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2070,7 +2061,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2152,10 +2143,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[5m])) by (name) *100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[$__rate_interval])) by (name) *100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{name}}",
@@ -2169,7 +2160,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2285,7 +2276,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2400,7 +2391,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2442,7 +2433,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2481,10 +2473,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_network_receive_bytes_total{name=~\".+\"}[5m])) by (name)",
+          "expr": "sum(rate(container_network_receive_bytes_total{name=~\".+\"}[$__rate_interval])) by (name)",
           "hide": false,
           "interval": "",
           "legendFormat": "{{name}}",
@@ -2498,7 +2490,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2540,7 +2532,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2579,10 +2572,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_network_transmit_bytes_total{name=~\".+\"}[5m])) by (name)",
+          "expr": "sum(rate(container_network_transmit_bytes_total{name=~\".+\"}[$__rate_interval])) by (name)",
           "interval": "",
           "legendFormat": "{{name}}",
           "range": true,
@@ -2593,10 +2586,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2640,7 +2630,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2692,10 +2683,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": {},
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2739,7 +2727,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2793,11 +2782,12 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "t4f0shgRk"
       },
       "fieldConfig": {
         "defaults": {
           "custom": {
+            "align": "auto",
             "displayMode": "auto",
             "filterable": false,
             "inspect": false
@@ -2807,7 +2797,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2881,7 +2872,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "t4f0shgRk"
           },
           "editorMode": "code",
           "expr": "(time() - container_start_time_seconds{name=~\".+\"})/86400",
@@ -2930,7 +2921,7 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 37,
   "style": "dark",
   "tags": [
@@ -2942,8 +2933,8 @@
     "list": []
   },
   "time": {
-    "from": "now-3h",
-    "to": "now"
+    "from": "2023-01-16T15:47:20.984Z",
+    "to": "2023-01-16T21:47:20.984Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2971,8 +2962,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "Docker and OS Metrics for Raspberry Pi",
+  "title": "Raspberry Pi & Docker Monitoring",
   "uid": "Ss3q6hSZk",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

@@ -48,3 +48,4 @@ datasources:
   version: 1
   # <bool> allow users to edit datasources from the UI.
   editable: true
+  uid: t4f0shgRk
