@@ -74,6 +74,8 @@ If you would like to install this dashboard from Grafana.com, simply follow the 
 - Click on the `Load` button
 - Click on the `Import` button
 
+Or you can follow the steps described in the [Grafana Documentation](https://grafana.com/docs/grafana/latest/dashboards/manage-dashboards/#import-a-dashboard).
+
 This dashboard is intended to help you get started with monitoring your Raspberry PI devices. If you have any changes or suggestions, you would like to see, please feel free to open an issue or create a pull request.
 
 Here is a screenshot of the dashboard:
