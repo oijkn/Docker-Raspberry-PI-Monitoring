@@ -67,7 +67,7 @@ If you like to add a new dashboard, simply place the JSON file in the [dashboard
 # Install Dashboard from Grafana.com (Optional)
 
 If you would like to install this dashboard from Grafana.com, simply follow the steps below:
-- Navigate to the dashboard on ![Grafana.com Dashboard](https://grafana.com/grafana/dashboards/15120-raspberry-pi-docker-monitoring/)
+- Navigate to the dashboard on [Grafana.com Dashboard](https://grafana.com/grafana/dashboards/15120-raspberry-pi-docker-monitoring/)
 - Click on the `Copy ID to Clipboard` button
 - Navigate to the `Import` page in Grafana
 - Paste the ID into the `Import via grafana.com` field
