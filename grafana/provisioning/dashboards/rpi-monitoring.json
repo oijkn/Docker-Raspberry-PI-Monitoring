@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 10566,
   "graphTooltip": 1,
-  "id": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1228,12 +1228,12 @@
             "uid": "t4f0shgRk"
           },
           "editorMode": "code",
-          "exemplar": true,
+          "exemplar": false,
           "expr": "node_thermal_zone_temp{type=\"cpu-thermal\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Temp",
           "range": true,
           "refId": "A",
@@ -2918,11 +2918,7 @@
   "refresh": "5s",
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [
-    "prometheus",
-    "cAdvisor",
-    "node-exporter"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
@@ -2957,7 +2953,7 @@
   },
   "timezone": "browser",
   "title": "Raspberry Pi & Docker Monitoring",
-  "uid": "Ss3q6hSZk",
+  "uid": "VKtkKcAVz",
   "version": 1,
   "weekStart": ""
 }
