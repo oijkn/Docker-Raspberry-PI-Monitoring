@@ -23,21 +23,26 @@ Before we get started installing the stack, we need to make sure that the follow
 
 ## Installation and Configuration
 
-If you would like to change which targets should be monitored, you can edit the [prometheus.yml](prometheus/prometheus.yml) file.
-<br/>The targets section contains a list of all the targets that should be monitored by Prometheus.
-<br/>The names defined in the `job_name` section are used to identify the targets in Grafana.
-<br/>The `static_configs` section contains the IP addresses of the targets that should be monitored. Actually, they are sourced from the service names defined in the [docker-compose.yml](docker-compose.yml) file.
-<br/>If you think that the `scrape_interval` value is too aggressive, you can change it to a more suitable value.
+To install the stack, follow the steps below:
 
-You must also create `data` directory and change the ownership of the `prometheus` and `grafana` folders for a nice and clean installation.
-<br/>To do so, run the following commands:
+- Clone this repository to your host machine.
+```bash
+git clone https://github.com/oijkn/Docker-Raspberry-PI-Monitoring.git
+```
+
+- Enter to the cloned directory.
+```bash
+cd Docker-Raspberry-PI-Monitoring
+```
+
+ - Create `data` directory and change the ownership of the `prometheus` and `grafana` folders for a nice and clean installation.
 ```bash
 mkdir -p prometheus/data grafana/data && \
 sudo chown -R 472:472 grafana/ && \
 sudo chown -R 65534:65534 prometheus/
 ```
 
-Once you have made the necessary changes, simply clone this repository and start the stack by running the following command:
+ - Start the stack with `docker-compose`.
 ```bash
 docker-compose up -d
 ```
@@ -52,6 +57,12 @@ This will start all the containers and make them available on the host machine.
 The Grafana dashboard can be accessed by navigating to `http://<host-ip>:3000` in your browser for example `http://192.168.1.100:3000`.
 <br/>The default username and password are both `admin`. You will be prompted to change the password on the first login.
 <br/>Credentials can be changed by editing the [.env](grafana/.env) file.
+
+If you would like to change which targets should be monitored, you can edit the [prometheus.yml](prometheus/prometheus.yml) file.
+<br/>The targets section contains a list of all the targets that should be monitored by Prometheus.
+<br/>The names defined in the `job_name` section are used to identify the targets in Grafana.
+<br/>The `static_configs` section contains the IP addresses of the targets that should be monitored. Actually, they are sourced from the service names defined in the [docker-compose.yml](docker-compose.yml) file.
+<br/>If you think that the `scrape_interval` value is too aggressive, you can change it to a more suitable value.
 
 In order to check if the stack is running correctly, you can run the following command:
 ```bash
