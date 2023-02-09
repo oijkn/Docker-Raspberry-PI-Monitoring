@@ -661,6 +661,86 @@
         "type": "prometheus",
         "uid": "t4f0shgRk"
       },
+      "description": "Total containers running",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 20,
+        "y": 1
+      },
+      "hideTimeOverride": true,
+      "id": 70,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "t4f0shgRk"
+          },
+          "editorMode": "code",
+          "expr": "count(container_last_seen{image=~ \"(.)+\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Containers",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "t4f0shgRk"
+      },
       "description": "System uptime",
       "fieldConfig": {
         "defaults": {
@@ -698,12 +778,12 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
-        "x": 20,
+        "w": 2,
+        "x": 22,
         "y": 1
       },
       "hideTimeOverride": true,
-      "id": 70,
+      "id": 89,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -2104,8 +2184,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2954,6 +3033,6 @@
   "timezone": "browser",
   "title": "Raspberry Pi & Docker Monitoring",
   "uid": "VKtkKcAVz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
