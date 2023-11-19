@@ -1,8 +1,9 @@
-version: "3"
+version: '3.5'
 services:
+
   grafana:
+    image: grafana/grafana-oss:latest
     container_name: monitoring-grafana
-    image: grafana/grafana:latest
     hostname: rpi-grafana
     restart: unless-stopped
     user: "472"
@@ -13,15 +14,14 @@ services:
     env_file:
       - ./grafana/.env
     volumes:
-      # /!\ To be modified depending on your needs /!\
       - ./grafana/data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     depends_on:
       - prometheus
 
   cadvisor:
-    container_name: monitoring-cadvisor
     image: gcr.io/cadvisor/cadvisor:v0.47.0
+    container_name: monitoring-cadvisor
     hostname: rpi-cadvisor
     restart: unless-stopped
     privileged: true
@@ -40,8 +40,8 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
 
   node-exporter:
-    container_name: monitoring-node-exporter
     image: prom/node-exporter:latest
+    container_name: monitoring-node-exporter
     hostname: rpi-exporter
     restart: unless-stopped
     networks:
@@ -61,8 +61,8 @@ services:
       - /:/host:ro,rslave
 
   prometheus:
-    container_name: monitoring-prometheus
     image: prom/prometheus:latest
+    container_name: monitoring-prometheus
     hostname: rpi-prometheus
     restart: unless-stopped
     user: "nobody"
@@ -74,7 +74,6 @@ services:
     expose:
       - 9090
     volumes:
-      # /!\ To be modified depending on your needs /!\
       - ./prometheus/data:/prometheus
       - ./prometheus:/etc/prometheus/
     depends_on:
