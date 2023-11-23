@@ -2,7 +2,7 @@
 
 ## Hit the Star! :star:
 
-If you are planning to use this repo, please hit the star. Thanks!
+If you find this repository useful, please consider giving it a star. Your support is greatly appreciated! :pray:
 
 ## Introduction
 
