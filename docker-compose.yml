@@ -21,7 +21,7 @@ services:
 
   cadvisor:
     container_name: monitoring-cadvisor
-    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
     hostname: rpi-cadvisor
     restart: unless-stopped
     privileged: true
