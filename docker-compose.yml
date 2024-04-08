@@ -29,6 +29,10 @@ services:
       - internal
     expose:
       - 8080
+    command:
+      - '-housekeeping_interval=15s'
+      - '-docker_only=true'
+      - '-store_container_labels=false'
     devices:
       - /dev/kmsg
     volumes:
