@@ -75,7 +75,7 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=1y'
       # /!\ Uncomment the following line to set a size limit for the Prometheus database /!\
-#      - '--sotrage.tsdb.retention.size=10GB'
+#      - '--storage.tsdb.retention.size=10GB'
     networks:
       - internal
     expose:
