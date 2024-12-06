@@ -20,7 +20,7 @@ services:
       - prometheus
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
     container_name: monitoring-cadvisor
     hostname: rpi-cadvisor
     restart: unless-stopped
@@ -29,6 +29,10 @@ services:
       - internal
     expose:
       - 8080
+    command:
+      - '-housekeeping_interval=15s'
+      - '-docker_only=true'
+      - '-store_container_labels=false'
     devices:
       - /dev/kmsg
     volumes:
