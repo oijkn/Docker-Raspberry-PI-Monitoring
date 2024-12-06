@@ -6,7 +6,7 @@ services:
     container_name: monitoring-grafana
     hostname: rpi-grafana
     restart: unless-stopped
-    user: "472"
+    user: $(id -u):$(id -g) # Dynamic user mapping
     networks:
       - internal
     ports:
@@ -65,7 +65,7 @@ services:
     container_name: monitoring-prometheus
     hostname: rpi-prometheus
     restart: unless-stopped
-    user: "nobody"
+    user: "65534:65534" # Explicit user and group ID
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
