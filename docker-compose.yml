@@ -1,4 +1,5 @@
-version: "3"
+version: "3.8"
+
 services:
   grafana:
     container_name: monitoring-grafana
@@ -13,18 +14,32 @@ services:
     env_file:
       - ./grafana/.env
     volumes:
-      # /!\ To be modified depending on your needs /!\
-      - ./grafana/data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     depends_on:
       - prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-O", "/dev/null", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "com.example.description=Grafana Dashboard"
+      - "com.example.service=monitoring"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   cadvisor:
     container_name: monitoring-cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
     hostname: rpi-cadvisor
     restart: unless-stopped
-    privileged: true
+    cap_add:
+      - SYS_ADMIN
     networks:
       - internal
     expose:
@@ -42,6 +57,21 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
+    healthcheck:
+      test: ["CMD", "wget", "-O", "/dev/null", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - "com.example.description=cAdvisor Container Monitoring"
+      - "com.example.service=monitoring"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 256m
+    mem_reservation: 128m
 
   node-exporter:
     container_name: monitoring-node-exporter
@@ -63,6 +93,21 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
       - /:/host:ro,rslave
+    healthcheck:
+      test: ["CMD", "wget", "-O", "/dev/null", "http://localhost:9100/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - "com.example.description=Node Exporter"
+      - "com.example.service=monitoring"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 128m
+    mem_reservation: 64m
 
   prometheus:
     container_name: monitoring-prometheus
@@ -74,23 +119,54 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=1y'
-      # /!\ Uncomment the following line to set a size limit for the Prometheus database /!\
-#      - '--storage.tsdb.retention.size=10GB'
+      - '--storage.tsdb.retention.size=10GB'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
     networks:
       - internal
     expose:
       - 9090
     volumes:
-      # /!\ To be modified depending on your needs /!\
-      - ./prometheus/data:/prometheus
+      - prometheus-data:/prometheus
       - ./prometheus:/etc/prometheus/
     depends_on:
       - cadvisor
       - node-exporter
-    links:
-      - cadvisor:cadvisor
-      - node-exporter:node-exporter
+    healthcheck:
+      test: ["CMD", "wget", "-O", "/dev/null", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    labels:
+      - "com.example.description=Prometheus Time Series Database"
+      - "com.example.service=monitoring"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 1g
+    mem_reservation: 512m
+
+volumes:
+  grafana-data:
+    labels:
+      - "com.example.description=Grafana Persistent Data"
+      - "com.example.service=monitoring"
+  prometheus-data:
+    labels:
+      - "com.example.description=Prometheus Persistent Data"
+      - "com.example.service=monitoring"
 
 networks:
   internal:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+    labels:
+      - "com.example.description=Monitoring Network"
+      - "com.example.service=monitoring"
